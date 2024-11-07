@@ -12,6 +12,7 @@ import {
 } from "@motion-canvas/core";
 import { Squircle } from "@/components/Squircle";
 import { Slider } from "@/arkham/Slider";
+import { ARKHAM_GREEN } from "@/arkham/colors";
 
 export default makeScene2D(function* (view) {
   view.fill("black");
@@ -25,8 +26,7 @@ export default makeScene2D(function* (view) {
   const x = createSignal(0);
   const y = createSignal(0);
 
-  const ARKHAM_GREEN = "#46fac3";
-  const ARKHAM_RED = "#7bdefd";
+  const LIGHT_BLUE = "#7bdefd";
 
   const squircle = createRef<Squircle>();
 
@@ -77,7 +77,7 @@ export default makeScene2D(function* (view) {
           y={() => -RECT_HEIGHT() / 2 + RY()}
           width={() => 2 * RX()}
           height={() => 2 * RY()}
-          fill={ARKHAM_RED}
+          fill={LIGHT_BLUE}
           lineWidth={16}
           opacity={0.2}
         />
@@ -86,7 +86,7 @@ export default makeScene2D(function* (view) {
           y={() => -RECT_HEIGHT() / 2 + RY()}
           width={() => 2 * RX()}
           height={() => 2 * RY()}
-          fill={ARKHAM_RED}
+          fill={LIGHT_BLUE}
           lineWidth={16}
           opacity={0.2}
         />
@@ -95,7 +95,7 @@ export default makeScene2D(function* (view) {
           y={() => RECT_HEIGHT() / 2 - RY()}
           width={() => 2 * RX()}
           height={() => 2 * RY()}
-          fill={ARKHAM_RED}
+          fill={LIGHT_BLUE}
           lineWidth={16}
           opacity={0.2}
         />
@@ -104,7 +104,7 @@ export default makeScene2D(function* (view) {
           y={() => RECT_HEIGHT() / 2 - RY()}
           width={() => 2 * RX()}
           height={() => 2 * RY()}
-          fill={ARKHAM_RED}
+          fill={LIGHT_BLUE}
           lineWidth={16}
           opacity={0.2}
         />
