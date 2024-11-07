@@ -10,3 +10,13 @@ export function shuffleArray<T>(array: T[]): T[] {
   }
   return array;
 }
+
+export const SCREEN = {
+  WIDTH: 1920,
+  LEFT: -1920 / 2,
+  RIGHT: +1920 / 2,
+
+  HEIGHT: 1080,
+  TOP: -1080 / 2,
+  BOTTOM: +1080 / 2,
+};

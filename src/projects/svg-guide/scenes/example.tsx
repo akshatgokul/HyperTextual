@@ -1,6 +1,6 @@
 import "@/global.css";
 
-import { Circle, makeScene2D, View2D, Node } from "@motion-canvas/2d";
+import { Circle, makeScene2D, View2D, Node, Layout } from "@motion-canvas/2d";
 import {
   all,
   createRef,
@@ -12,7 +12,8 @@ import {
 } from "@motion-canvas/core";
 import { Squircle } from "@/components/Squircle";
 import { Slider } from "@/arkham/Slider";
-import { ARKHAM_GREEN } from "@/arkham/colors";
+import { ArkhamColors } from "@/arkham/colors";
+import { SCREEN } from "@/utilities";
 
 export default makeScene2D(function* (view) {
   view.fill("black");
@@ -26,8 +27,6 @@ export default makeScene2D(function* (view) {
   const x = createSignal(0);
   const y = createSignal(0);
 
-  const LIGHT_BLUE = "#7bdefd";
-
   const squircle = createRef<Squircle>();
 
   const innerEllipsesNode = createRef<Node>();
@@ -36,78 +35,78 @@ export default makeScene2D(function* (view) {
 
   view.add(
     <Node ref={contentRef}>
-      {/* RX */}
-      <Slider
-        label="rx"
-        valueFunction={(fraction) => Math.round(fraction * 256)}
-        x={() => -RECT_WIDTH() / 2}
-        y={() => -(RECT_HEIGHT() / 2 + 100)}
-        width={RECT_WIDTH}
-        fraction={() => RX() / 256}
-        stroke={"gray"}
-        fill={ARKHAM_GREEN}
-      ></Slider>
-      {/* RY */}
-      <Slider
-        label="ry"
-        valueFunction={(fraction) => Math.round(fraction * 256)}
-        x={() => -RECT_WIDTH() / 2}
-        y={() => RECT_HEIGHT() / 2 + 50}
-        width={RECT_WIDTH}
-        fraction={() => RY() / 256}
-        stroke={"gray"}
-        fill={ARKHAM_GREEN}
-      ></Slider>
-      <Squircle
-        ref={squircle}
-        x={x}
-        y={y}
-        width={RECT_WIDTH}
-        height={RECT_HEIGHT}
-        rx={RX}
-        ry={RY}
-        stroke={ARKHAM_GREEN}
-        shadowBlur={2}
-        shadowColor={ARKHAM_GREEN}
-        lineWidth={16}
-      ></Squircle>
-      <Node ref={innerEllipsesNode}>
-        <Circle
-          x={() => -RECT_WIDTH() / 2 + RX()}
-          y={() => -RECT_HEIGHT() / 2 + RY()}
-          width={() => 2 * RX()}
-          height={() => 2 * RY()}
-          fill={LIGHT_BLUE}
+      <Node x={SCREEN.LEFT + RECT_WIDTH() / 2}>
+        {/* RX */}
+        <Slider
+          label="rx"
+          valueFunction={(fraction) => Math.round(fraction * 256)}
+          y={() => -100}
+          width={RECT_WIDTH}
+          fraction={() => RX() / 256}
+          stroke={"gray"}
+          fill={ArkhamColors.GREEN}
+        ></Slider>
+        {/* RY */}
+        <Slider
+          label="ry"
+          valueFunction={(fraction) => Math.round(fraction * 256)}
+          y={() => 100}
+          width={RECT_WIDTH}
+          fraction={() => RY() / 256}
+          stroke={"gray"}
+          fill={ArkhamColors.GREEN}
+        ></Slider>
+      </Node>
+      <Node x={SCREEN.RIGHT - RECT_WIDTH()}>
+        <Squircle
+          ref={squircle}
+          x={x}
+          y={y}
+          width={RECT_WIDTH}
+          height={RECT_HEIGHT}
+          rx={RX}
+          ry={RY}
+          stroke={ArkhamColors.GREEN}
           lineWidth={16}
-          opacity={0.2}
-        />
-        <Circle
-          x={() => RECT_WIDTH() / 2 - RX()}
-          y={() => -RECT_HEIGHT() / 2 + RY()}
-          width={() => 2 * RX()}
-          height={() => 2 * RY()}
-          fill={LIGHT_BLUE}
-          lineWidth={16}
-          opacity={0.2}
-        />
-        <Circle
-          x={() => -RECT_WIDTH() / 2 + RX()}
-          y={() => RECT_HEIGHT() / 2 - RY()}
-          width={() => 2 * RX()}
-          height={() => 2 * RY()}
-          fill={LIGHT_BLUE}
-          lineWidth={16}
-          opacity={0.2}
-        />
-        <Circle
-          x={() => RECT_WIDTH() / 2 - RX()}
-          y={() => RECT_HEIGHT() / 2 - RY()}
-          width={() => 2 * RX()}
-          height={() => 2 * RY()}
-          fill={LIGHT_BLUE}
-          lineWidth={16}
-          opacity={0.2}
-        />
+        ></Squircle>
+        <Node ref={innerEllipsesNode}>
+          <Circle
+            x={() => -RECT_WIDTH() / 2 + RX()}
+            y={() => -RECT_HEIGHT() / 2 + RY()}
+            width={() => 2 * RX()}
+            height={() => 2 * RY()}
+            fill={ArkhamColors.LIGHT_BLUE}
+            lineWidth={16}
+            opacity={0.2}
+          />
+          <Circle
+            x={() => RECT_WIDTH() / 2 - RX()}
+            y={() => -RECT_HEIGHT() / 2 + RY()}
+            width={() => 2 * RX()}
+            height={() => 2 * RY()}
+            fill={ArkhamColors.LIGHT_BLUE}
+            lineWidth={16}
+            opacity={0.2}
+          />
+          <Circle
+            x={() => -RECT_WIDTH() / 2 + RX()}
+            y={() => RECT_HEIGHT() / 2 - RY()}
+            width={() => 2 * RX()}
+            height={() => 2 * RY()}
+            fill={ArkhamColors.LIGHT_BLUE}
+            lineWidth={16}
+            opacity={0.2}
+          />
+          <Circle
+            x={() => RECT_WIDTH() / 2 - RX()}
+            y={() => RECT_HEIGHT() / 2 - RY()}
+            width={() => 2 * RX()}
+            height={() => 2 * RY()}
+            fill={ArkhamColors.LIGHT_BLUE}
+            lineWidth={16}
+            opacity={0.2}
+          />
+        </Node>
       </Node>
     </Node>,
   );
@@ -117,6 +116,7 @@ export default makeScene2D(function* (view) {
     .children()
     .forEach((node) => node.opacity(0));
 
+  // Fade in all elements
   yield* contentRef().opacity(0, 0).to(1, 0.5);
 
   yield* waitFor(1);
@@ -125,7 +125,7 @@ export default makeScene2D(function* (view) {
   yield* all(
     ...innerEllipsesNode()
       .children()
-      .map((node, index) => delay(index * 0.25, node.opacity(0.25, 0.75))),
+      .map((node, index) => delay(index * 0.5, node.opacity(0.25, 1))),
   );
   yield* waitFor(1);
 
@@ -143,14 +143,14 @@ export default makeScene2D(function* (view) {
 function* createDotsBackground(view: View2D) {
   const GCD = 120;
   const refsArray: Reference<Circle>[] = [];
-  for (let i = 1; i < Math.round(1920 / GCD); ++i) {
-    for (let j = 1; j < Math.round(1080 / GCD); ++j) {
+  for (let i = 1; i <= Math.round(1920 / GCD); ++i) {
+    for (let j = 1; j <= Math.round(1080 / GCD); ++j) {
       const ref = createRef<Circle>();
       view.add(
         <Circle
           ref={ref}
-          x={i * GCD - 1920 / 2}
-          y={j * GCD - 1080 / 2}
+          x={i * GCD - 1920 / 2 - GCD / 2}
+          y={j * GCD - 1080 / 2 - GCD / 2}
           fill={"#ffffff"}
           size={5}
         />,
